@@ -1,5 +1,3 @@
-console.log("PORT desde Railway:", process.env.PORT);
-
 import express from "express";
 import cors    from "cors";
 
@@ -11,10 +9,23 @@ import contentRoutes  from "./routes/content.js";
 const app  = express();
 const PORT = process.env.PORT ?? 4000;
 
+// CORS: acepta el frontend de Vercel y localhost para desarrollo
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  "http://localhost:5173",
+  "http://localhost:4173",
+].filter(Boolean);
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL ?? "http://localhost:5173",
+  origin: (origin, callback) => {
+    // Permite requests sin origin (Postman, Railway health checks)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    callback(new Error(`CORS bloqueado para: ${origin}`));
+  },
   credentials: true,
 }));
+
 app.use(express.json({ limit: "10mb" }));
 
 app.use("/api/auth",     authRoutes);
@@ -29,6 +40,6 @@ app.use((err, _, res, __) => {
   res.status(500).json({ error: "Error interno del servidor" });
 });
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Backend corriendo en puerto ${PORT}`);
 });
