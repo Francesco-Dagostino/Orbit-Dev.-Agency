@@ -13,7 +13,7 @@ function AdminNav({ active, setActive, onLogout }) {
     <header className="bg-white border-b border-stone-200 px-6 py-4">
       <div className="max-w-5xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <span className="font-bold text-stone-900">studio<span className="text-stone-400">·lab</span> <span className="text-stone-400 text-sm font-normal">/ Admin</span></span>
+          <span className="font-bold text-stone-900">Orbit Dev<span className="text-stone-400">.Agency</span> <span className="text-stone-400 text-sm font-normal">/ Admin</span></span>
           <nav className="hidden md:flex gap-1">
             {tabs.map((t) => (
               <button key={t} onClick={() => setActive(t)}
