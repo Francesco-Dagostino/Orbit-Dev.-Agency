@@ -29,7 +29,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
         {/* Logo */}
         <span className="font-bold text-stone-900 tracking-tight text-lg">
-          Orbit Dev<span className="text-stone-400">.Agency</span>
+          Fiwo<span className="text-stone-400">.Agency</span>
         </span>
 
         {/* Desktop nav */}

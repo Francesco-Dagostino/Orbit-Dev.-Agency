@@ -3,7 +3,7 @@ export default function Footer() {
     <footer className="border-t border-stone-200 bg-stone-50 py-10">
       <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-stone-400">
         <span>
-          studio<span className="text-stone-300">·lab</span> ©{" "}
+          Fiwo<span className="text-stone-300">.Agency</span> ©{" "}
           {new Date().getFullYear()}
         </span>
         <span>Hecho con cariño en Rosario 🇦🇷</span>
