@@ -14,21 +14,9 @@ export default function Hero() {
   return (
     <section
       id="inicio"
-      className="min-h-screen flex flex-col justify-center relative overflow-hidden bg-stone-50"
+      className="min-h-screen flex flex-col justify-center relative overflow-hidden"
     >
-      {/* Subtle grid background */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage:
-            "linear-gradient(#d6d3d1 1px, transparent 1px), linear-gradient(90deg, #d6d3d1 1px, transparent 1px)",
-          backgroundSize: "48px 48px",
-          opacity: 0.25,
-        }}
-      />
-
-      <div className="max-w-6xl mx-auto px-6 pt-28 pb-20 relative">
-        {/* Main content */}
+      <div className="max-w-6xl mx-auto px-6 pt-32 pb-20 relative w-full">
         <div
           className="transition-all duration-700"
           style={{
@@ -36,56 +24,77 @@ export default function Hero() {
             transform: mounted ? "translateY(0)" : "translateY(24px)",
           }}
         >
-          <SectionLabel>Agencia de Desarrollo</SectionLabel>
-          <h1 className="text-5xl md:text-7xl font-bold text-stone-900 leading-tight tracking-tight max-w-3xl">
-            Convertimos ideas en{" "}
-            <span className="italic font-light text-stone-500">software</span>{" "}
-            que funciona.
-          </h1>
-          <p className="mt-6 text-stone-500 text-lg max-w-xl leading-relaxed">
-            Somos un equipo pequeño y enfocado. Desarrollamos productos digitales
-            a medida con atención al detalle, código limpio y diseño que enamora.
-          </p>
+          <SectionLabel>Software Development</SectionLabel>
+
+          <div className="max-w-4xl">
+            <p className="text-sm uppercase tracking-[0.38em] text-slate-300/80 mb-6">
+              Lo que tu negocio necesita
+            </p>
+            <h1 className="text-5xl md:text-7xl font-extrabold leading-[0.95] tracking-tight text-white max-w-4xl">
+              Web &{" "}
+              <span className="bg-gradient-to-r from-blue-500 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+                software
+              </span>
+              <br />
+              que hacen crecer tu negocio
+            </h1>
+            <p className="mt-7 text-slate-300 text-lg max-w-2xl leading-relaxed">
+              Soluciones digitales rápidas y escalables para empresas que
+              quieren crecer, con foco en producto, velocidad y una ejecución
+              prolija.
+            </p>
+          </div>
+
           <div className="mt-10 flex flex-wrap gap-4">
             <button
-              onClick={() => scrollTo("proyectos")}
-              className="bg-stone-900 text-white px-7 py-3.5 rounded-full text-sm font-medium hover:bg-stone-700 transition-colors"
+              onClick={() => scrollTo("contacto")}
+              className="rounded-full bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-400 px-8 py-4 text-sm font-semibold text-white shadow-[0_16px_45px_rgba(37,99,235,0.35)] transition-transform duration-200 hover:scale-[1.02]"
             >
-              Ver proyectos
+              Cotizá tu proyecto
             </button>
             <button
-              onClick={() => scrollTo("contacto")}
-              className="border border-stone-300 text-stone-700 px-7 py-3.5 rounded-full text-sm font-medium hover:border-stone-500 transition-colors"
+              onClick={() => scrollTo("proyectos")}
+              className="rounded-full border border-cyan-400/20 bg-white/5 px-8 py-4 text-sm font-medium text-slate-100 backdrop-blur-sm transition-colors hover:bg-white/10"
             >
-              Contactanos
+              Ver proyectos
             </button>
           </div>
         </div>
 
-        {/* Stats */}
         <div
-          className="mt-20 flex flex-wrap gap-10 transition-all duration-700 delay-200"
+          className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-4 transition-all duration-700 delay-200"
           style={{
             opacity: mounted ? 1 : 0,
             transform: mounted ? "translateY(0)" : "translateY(16px)",
           }}
         >
           {[
-            ["10+", "Proyectos entregados"],
-            ["3", "Países atendidos"],
-            ["100%", "Clientes satisfechos"],
+            ["Equipo", "Profesional"],
+            ["100%", "A medida"],
+            ["24h", "Respuesta"],
           ].map(([n, l]) => (
-            <div key={l}>
-              <p className="text-3xl font-bold text-stone-900">{n}</p>
-              <p className="text-stone-400 text-sm mt-0.5">{l}</p>
+            <div
+              key={l}
+              className="rounded-[28px] border border-cyan-400/12 bg-white/5 px-6 py-6 backdrop-blur-xl shadow-[0_18px_50px_rgba(2,6,23,0.24)]"
+            >
+              <p className="text-4xl font-extrabold bg-gradient-to-r from-blue-500 to-cyan-300 bg-clip-text text-transparent">
+                {n}
+              </p>
+              <p className="mt-2 text-sm uppercase tracking-[0.24em] text-slate-300/80">
+                {l}
+              </p>
             </div>
           ))}
         </div>
+
+        <p className="mt-8 text-slate-200 text-lg">
+          🚀 Respondemos en menos de{" "}
+          <span className="font-semibold text-white">24h</span>
+        </p>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-stone-400">
-        <span className="text-xs tracking-widest uppercase">Scroll</span>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-cyan-200/70">
+        <span className="text-xs tracking-[0.32em] uppercase">Scroll</span>
         <span className="text-base animate-bounce">↓</span>
       </div>
     </section>

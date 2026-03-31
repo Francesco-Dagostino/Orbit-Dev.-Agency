@@ -3,7 +3,7 @@ import { SectionLabel, useInView } from "../utils";
 import { useContact } from "../hooks/useContent";
 
 const inputClass =
-  "w-full border border-stone-200 rounded-xl px-4 py-3 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:border-stone-500 transition-colors bg-white";
+  "w-full rounded-2xl border border-cyan-400/12 bg-white/5 px-4 py-3 text-sm text-slate-100 placeholder-slate-400 outline-none transition-colors focus:border-cyan-300/35";
 
 export default function Contact() {
   const [ref, visible] = useInView();
@@ -15,35 +15,35 @@ export default function Contact() {
   const submit = (e) => { e.preventDefault(); setSent(true); };
 
   return (
-    <section id="contacto" className="py-28 bg-white">
+    <section id="contacto" className="py-28">
       <div className="max-w-6xl mx-auto px-6">
         <div ref={ref} className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 rounded-[32px] border border-cyan-400/12 bg-white/5 p-8 md:p-10 backdrop-blur-xl shadow-[0_22px_70px_rgba(2,6,23,0.24)]">
             <div>
               <SectionLabel>Trabajemos juntos</SectionLabel>
-              <h2 className="text-4xl font-bold text-stone-900 tracking-tight mb-6">Contanos tu proyecto</h2>
-              <p className="text-stone-500 leading-relaxed mb-8">
+              <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-6">Contanos tu proyecto</h2>
+              <p className="text-slate-300 leading-relaxed mb-8 max-w-xl">
                 Respondemos en menos de 24 horas. Sin compromisos: la primera consulta es siempre gratis.
               </p>
-              <div className="space-y-4 text-sm text-stone-500">
+              <div className="space-y-4 text-sm text-slate-300">
                 {contact?.email   && <p>✉ {contact.email}</p>}
                 {contact?.address && <p>📍 {contact.address}</p>}
                 {contact?.hours   && <p>🕐 {contact.hours}</p>}
                 {contact?.phone   && <p>📞 {contact.phone}</p>}
               </div>
               <div className="flex gap-4 mt-6">
-                {contact?.linkedin  && <a href={contact.linkedin}  target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-stone-700 text-sm transition-colors">LinkedIn</a>}
-                {contact?.github    && <a href={contact.github}    target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-stone-700 text-sm transition-colors">GitHub</a>}
-                {contact?.instagram && <a href={contact.instagram} target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-stone-700 text-sm transition-colors">Instagram</a>}
+                {contact?.linkedin  && <a href={contact.linkedin}  target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-cyan-200 text-sm transition-colors">LinkedIn</a>}
+                {contact?.github    && <a href={contact.github}    target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-cyan-200 text-sm transition-colors">GitHub</a>}
+                {contact?.instagram && <a href={contact.instagram} target="_blank" rel="noopener noreferrer" className="text-slate-300 hover:text-cyan-200 text-sm transition-colors">Instagram</a>}
               </div>
             </div>
 
             <div>
               {sent ? (
-                <div className="h-full flex flex-col justify-center items-start">
+                <div className="h-full flex flex-col justify-center items-start rounded-[28px] border border-cyan-400/10 bg-[#08112b]/60 p-8">
                   <p className="text-4xl mb-4">✓</p>
-                  <p className="font-semibold text-stone-900 text-lg">¡Mensaje enviado!</p>
-                  <p className="text-stone-500 text-sm mt-2">Te respondemos pronto. Gracias por escribirnos.</p>
+                  <p className="font-semibold text-white text-lg">¡Mensaje enviado!</p>
+                  <p className="text-slate-300 text-sm mt-2">Te respondemos pronto. Gracias por escribirnos.</p>
                 </div>
               ) : (
                 <form onSubmit={submit} className="space-y-4">
@@ -53,7 +53,7 @@ export default function Contact() {
                   </div>
                   <input name="project" placeholder="¿Qué tipo de proyecto tenés?" value={form.project} onChange={handle} className={inputClass} />
                   <textarea name="message" required rows={5} placeholder="Contanos de qué se trata…" value={form.message} onChange={handle} className={inputClass + " resize-none"} />
-                  <button type="submit" className="w-full bg-stone-900 text-white rounded-full py-3.5 text-sm font-medium hover:bg-stone-700 transition-colors">
+                  <button type="submit" className="w-full rounded-full bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-400 py-3.5 text-sm font-semibold text-white shadow-[0_16px_40px_rgba(37,99,235,0.35)] transition-transform duration-200 hover:scale-[1.01]">
                     Enviar mensaje
                   </button>
                 </form>

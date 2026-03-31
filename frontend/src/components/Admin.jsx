@@ -2,34 +2,31 @@ import { useState, useRef } from "react";
 import { useContact, useContent } from "../hooks/useContent";
 import { useAuth, useImageUpload, useProjects } from "../hooks/useProjects";
 
+const inputClass = "w-full rounded-2xl border border-cyan-400/12 bg-white/5 px-4 py-2.5 text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:border-cyan-300/35 transition-colors";
+const labelClass = "text-xs text-slate-400 mb-1 block";
 
-const inputClass = "w-full border border-stone-200 rounded-xl px-4 py-2.5 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:border-stone-600 transition-colors bg-white";
-const labelClass = "text-xs text-stone-500 mb-1 block";
-
-// ── Navbar del admin ───────────────────────────────────────────────────────────
 function AdminNav({ active, setActive, onLogout }) {
   const tabs = ["proyectos", "equipo", "servicios", "faq", "contacto"];
   return (
-    <header className="bg-white border-b border-stone-200 px-6 py-4">
-      <div className="max-w-5xl mx-auto flex items-center justify-between">
-        <div className="flex items-center gap-6">
-          <span className="font-bold text-stone-900">Orbit Dev<span className="text-stone-400">.Agency</span> <span className="text-stone-400 text-sm font-normal">/ Admin</span></span>
-          <nav className="hidden md:flex gap-1">
+    <header className="border-b border-cyan-400/10 bg-[#071228]/80 px-6 py-4 backdrop-blur-xl">
+      <div className="max-w-5xl mx-auto flex items-center justify-between gap-4">
+        <div className="flex items-center gap-6 flex-wrap">
+          <span className="font-bold text-white tracking-[0.12em] uppercase">Fiwo <span className="text-cyan-300">Agency</span> <span className="text-slate-400 text-sm font-normal normal-case">/ Admin</span></span>
+          <nav className="hidden md:flex gap-1 rounded-full border border-cyan-400/10 bg-white/5 px-2 py-2">
             {tabs.map((t) => (
               <button key={t} onClick={() => setActive(t)}
-                className={`capitalize text-sm px-3 py-1.5 rounded-lg transition-colors ${active === t ? "bg-stone-100 text-stone-900 font-medium" : "text-stone-400 hover:text-stone-700"}`}>
+                className={`capitalize text-sm px-3 py-1.5 rounded-full transition-colors ${active === t ? "bg-gradient-to-r from-blue-600 to-cyan-400 text-white font-medium" : "text-slate-300 hover:text-cyan-200 hover:bg-white/6"}`}>
                 {t}
               </button>
             ))}
           </nav>
         </div>
-        <button onClick={onLogout} className="text-sm text-stone-400 hover:text-stone-700 transition-colors">Cerrar sesión</button>
+        <button onClick={onLogout} className="text-sm text-slate-300 hover:text-cyan-200 transition-colors">Cerrar sesión</button>
       </div>
     </header>
   );
 }
 
-// ── Image Uploader ─────────────────────────────────────────────────────────────
 function ImageUploader({ value, onChange }) {
   const { upload, uploading } = useImageUpload();
   const fileRef = useRef(null);
@@ -48,21 +45,21 @@ function ImageUploader({ value, onChange }) {
         onDragOver={(e) => { e.preventDefault(); setDrag(true); }}
         onDragLeave={() => setDrag(false)}
         onDrop={(e) => { e.preventDefault(); setDrag(false); handleFile(e.dataTransfer.files[0]); }}
-        className={`border-2 border-dashed rounded-xl p-5 text-center cursor-pointer transition-colors ${drag ? "border-stone-500 bg-stone-50" : "border-stone-200 hover:border-stone-400"}`}>
+        className={`border-2 border-dashed rounded-2xl p-5 text-center cursor-pointer transition-colors ${drag ? "border-cyan-300/35 bg-white/8" : "border-cyan-400/12 hover:border-cyan-300/25 bg-white/4"}`}>
         {uploading ? (
           <div className="flex flex-col items-center gap-2">
-            <div className="w-5 h-5 border-2 border-stone-400 border-t-transparent rounded-full animate-spin" />
-            <p className="text-stone-400 text-xs">Subiendo…</p>
+            <div className="w-5 h-5 border-2 border-cyan-300 border-t-transparent rounded-full animate-spin" />
+            <p className="text-slate-300 text-xs">Subiendo…</p>
           </div>
         ) : value ? (
           <div className="flex flex-col items-center gap-2">
             <img src={value} alt="preview" className="h-24 w-full object-cover rounded-lg" onError={(e) => (e.target.style.display = "none")} />
-            <p className="text-stone-400 text-xs">Clic o arrastrá para cambiar</p>
+            <p className="text-slate-300 text-xs">Clic o arrastrá para cambiar</p>
           </div>
         ) : (
           <div className="py-2">
-            <p className="text-stone-400 text-sm">↑ Arrastrá o hacé clic</p>
-            <p className="text-stone-300 text-xs mt-1">JPG, PNG, WEBP — máx. 5MB</p>
+            <p className="text-slate-300 text-sm">↑ Arrastrá o hacé clic</p>
+            <p className="text-slate-400 text-xs mt-1">JPG, PNG, WEBP — máx. 5MB</p>
           </div>
         )}
       </div>
@@ -72,17 +69,15 @@ function ImageUploader({ value, onChange }) {
   );
 }
 
-// ── Toast ──────────────────────────────────────────────────────────────────────
 function useToast() {
   const [toast, setToast] = useState("");
   const show = (msg) => { setToast(msg); setTimeout(() => setToast(""), 3000); };
   const Toast = () => toast ? (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-stone-900 text-white text-sm px-5 py-3 rounded-full shadow-lg z-50">{toast}</div>
+    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-[#08112b] border border-cyan-400/10 text-white text-sm px-5 py-3 shadow-[0_16px_40px_rgba(2,6,23,0.4)] z-50">{toast}</div>
   ) : null;
   return { show, Toast };
 }
 
-// ── Sección: Proyectos ─────────────────────────────────────────────────────────
 const emptyProject = { title: "", client: "", industry: "", description: "", tags: "", year: new Date().getFullYear(), image_url: "", live_url: "", published: true };
 
 function ProjectsSection() {
@@ -114,11 +109,11 @@ function ProjectsSection() {
   };
 
   if (view === "form") return (
-    <div className="bg-white border border-stone-200 rounded-2xl p-8">
-      <h2 className="text-lg font-bold text-stone-900 mb-6">{editing ? "Editar proyecto" : "Nuevo proyecto"}</h2>
+    <div className="rounded-[30px] border border-cyan-400/12 bg-white/5 p-8 backdrop-blur-xl">
+      <h2 className="text-lg font-bold text-white mb-6">{editing ? "Editar proyecto" : "Nuevo proyecto"}</h2>
       <form onSubmit={handleSave} className="space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {[["title","Título *",true],["client","Cliente *",true],["industry","Industria *",true],["year","Año",false]].map(([n,l,r]) => (
+          {[ ["title","Título *",true],["client","Cliente *",true],["industry","Industria *",true],["year","Año",false] ].map(([n,l,r]) => (
             <div key={n}><label className={labelClass}>{l}</label>
               <input name={n} required={r} value={form[n]} onChange={(e) => setForm({...form,[n]:e.target.value})} className={inputClass} /></div>
           ))}
@@ -133,11 +128,11 @@ function ProjectsSection() {
           <input value={form.live_url} onChange={(e) => setForm({...form,live_url:e.target.value})} placeholder="https://cliente.com" className={inputClass} /></div>
         <label className="flex items-center gap-2 cursor-pointer">
           <input type="checkbox" checked={form.published} onChange={(e) => setForm({...form,published:e.target.checked})} />
-          <span className="text-sm text-stone-600">Publicado</span>
+          <span className="text-sm text-slate-300">Publicado</span>
         </label>
         <div className="flex gap-3 pt-2">
-          <button type="submit" disabled={saving} className="bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-700 disabled:opacity-50 transition-colors">{saving ? "Guardando…" : "Guardar"}</button>
-          <button type="button" onClick={() => setView("list")} className="border border-stone-200 text-stone-600 px-6 py-2.5 rounded-full text-sm hover:border-stone-400 transition-colors">Cancelar</button>
+          <button type="submit" disabled={saving} className="bg-gradient-to-r from-blue-600 to-cyan-400 text-white px-6 py-2.5 rounded-full text-sm font-medium disabled:opacity-50 transition-transform hover:scale-[1.01]">{saving ? "Guardando…" : "Guardar"}</button>
+          <button type="button" onClick={() => setView("list")} className="border border-cyan-400/12 text-slate-200 px-6 py-2.5 rounded-full text-sm transition-colors hover:bg-white/6">Cancelar</button>
         </div>
       </form>
       <Toast />
@@ -147,28 +142,28 @@ function ProjectsSection() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <div><h1 className="text-2xl font-bold text-stone-900">Proyectos</h1>
-          <p className="text-stone-400 text-sm">{projects.length} proyecto{projects.length !== 1 ? "s" : ""}</p></div>
-        <button onClick={openAdd} className="bg-stone-900 text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-stone-700 transition-colors">+ Nuevo</button>
+        <div><h1 className="text-2xl font-bold text-white">Proyectos</h1>
+          <p className="text-slate-400 text-sm">{projects.length} proyecto{projects.length !== 1 ? "s" : ""}</p></div>
+        <button onClick={openAdd} className="bg-gradient-to-r from-blue-600 to-cyan-400 text-white px-5 py-2.5 rounded-full text-sm font-medium transition-transform hover:scale-[1.01]">+ Nuevo</button>
       </div>
-      {loading && <div className="grid grid-cols-1 md:grid-cols-2 gap-4">{[1,2].map((i) => <div key={i} className="h-36 border border-stone-200 rounded-2xl animate-pulse bg-stone-50" />)}</div>}
-      {error && <p className="text-red-400 text-sm">{error}</p>}
-      {!loading && projects.length === 0 && <p className="text-stone-400 text-sm text-center py-16">No hay proyectos aún.</p>}
+      {loading && <div className="grid grid-cols-1 md:grid-cols-2 gap-4">{[1,2].map((i) => <div key={i} className="h-36 rounded-[24px] animate-pulse border border-cyan-400/10 bg-white/5" />)}</div>}
+      {error && <p className="text-red-300 text-sm">{error}</p>}
+      {!loading && projects.length === 0 && <p className="text-slate-400 text-sm text-center py-16">No hay proyectos aún.</p>}
       {!loading && projects.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {projects.map((p) => (
-            <div key={p.id} className="border border-stone-200 rounded-2xl overflow-hidden bg-white">
+            <div key={p.id} className="rounded-[24px] overflow-hidden border border-cyan-400/12 bg-white/5 backdrop-blur-xl">
               {p.image_url && <img src={p.image_url} alt={p.title} className="w-full h-32 object-cover" />}
               <div className="p-4">
                 <div className="flex justify-between items-start gap-2">
                   <div className="min-w-0">
-                    <p className="font-semibold text-stone-900 truncate">{p.title}</p>
-                    <p className="text-xs text-stone-400">{p.client} · {p.industry} · {p.year}</p>
+                    <p className="font-semibold text-white truncate">{p.title}</p>
+                    <p className="text-xs text-slate-400">{p.client} · {p.industry} · {p.year}</p>
                   </div>
                   <div className="flex gap-2 flex-shrink-0">
-                    <button onClick={() => togglePublished(p.id, p.published)} className={`text-xs px-3 py-1 rounded-full border transition-colors ${p.published ? "border-green-200 text-green-600" : "border-stone-200 text-stone-400"}`}>{p.published ? "Publicado" : "Oculto"}</button>
-                    <button onClick={() => openEdit(p)} className="text-xs text-stone-500 border border-stone-200 px-3 py-1 rounded-full hover:border-stone-400 transition-colors">Editar</button>
-                    <button onClick={() => handleDelete(p.id)} className="text-xs text-red-400 border border-red-100 px-3 py-1 rounded-full hover:bg-red-50 transition-colors">Borrar</button>
+                    <button onClick={() => togglePublished(p.id, p.published)} className={`text-xs px-3 py-1 rounded-full border transition-colors ${p.published ? "border-cyan-300/20 text-cyan-200" : "border-cyan-400/10 text-slate-400"}`}>{p.published ? "Publicado" : "Oculto"}</button>
+                    <button onClick={() => openEdit(p)} className="text-xs text-slate-300 border border-cyan-400/12 px-3 py-1 rounded-full transition-colors hover:bg-white/6">Editar</button>
+                    <button onClick={() => handleDelete(p.id)} className="text-xs text-red-300 border border-red-400/15 px-3 py-1 rounded-full transition-colors hover:bg-red-500/10">Borrar</button>
                   </div>
                 </div>
               </div>
@@ -181,7 +176,6 @@ function ProjectsSection() {
   );
 }
 
-// ── Sección genérica: Equipo / Servicios / FAQ ─────────────────────────────────
 function ContentSection({ resource, title, fields, emptyItem }) {
   const { items, loading, add, update, remove } = useContent(resource);
   const { show, Toast } = useToast();
@@ -210,8 +204,8 @@ function ContentSection({ resource, title, fields, emptyItem }) {
   };
 
   if (view === "form") return (
-    <div className="bg-white border border-stone-200 rounded-2xl p-8">
-      <h2 className="text-lg font-bold text-stone-900 mb-6">{editing ? `Editar` : `Nuevo`}</h2>
+    <div className="rounded-[30px] border border-cyan-400/12 bg-white/5 p-8 backdrop-blur-xl">
+      <h2 className="text-lg font-bold text-white mb-6">{editing ? `Editar` : `Nuevo`}</h2>
       <form onSubmit={handleSave} className="space-y-4">
         {fields.map((f) => (
           <div key={f.name}>
@@ -226,8 +220,8 @@ function ContentSection({ resource, title, fields, emptyItem }) {
           </div>
         ))}
         <div className="flex gap-3 pt-2">
-          <button type="submit" disabled={saving} className="bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-700 disabled:opacity-50 transition-colors">{saving ? "Guardando…" : "Guardar"}</button>
-          <button type="button" onClick={() => setView("list")} className="border border-stone-200 text-stone-600 px-6 py-2.5 rounded-full text-sm hover:border-stone-400 transition-colors">Cancelar</button>
+          <button type="submit" disabled={saving} className="bg-gradient-to-r from-blue-600 to-cyan-400 text-white px-6 py-2.5 rounded-full text-sm font-medium disabled:opacity-50 transition-transform hover:scale-[1.01]">{saving ? "Guardando…" : "Guardar"}</button>
+          <button type="button" onClick={() => setView("list")} className="border border-cyan-400/12 text-slate-200 px-6 py-2.5 rounded-full text-sm transition-colors hover:bg-white/6">Cancelar</button>
         </div>
       </form>
       <Toast />
@@ -237,27 +231,27 @@ function ContentSection({ resource, title, fields, emptyItem }) {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <div><h1 className="text-2xl font-bold text-stone-900">{title}</h1>
-          <p className="text-stone-400 text-sm">{items.length} elemento{items.length !== 1 ? "s" : ""}</p></div>
-        <button onClick={openAdd} className="bg-stone-900 text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-stone-700 transition-colors">+ Nuevo</button>
+        <div><h1 className="text-2xl font-bold text-white">{title}</h1>
+          <p className="text-slate-400 text-sm">{items.length} elemento{items.length !== 1 ? "s" : ""}</p></div>
+        <button onClick={openAdd} className="bg-gradient-to-r from-blue-600 to-cyan-400 text-white px-5 py-2.5 rounded-full text-sm font-medium transition-transform hover:scale-[1.01]">+ Nuevo</button>
       </div>
-      {loading && <div className="space-y-3">{[1,2,3].map((i) => <div key={i} className="h-14 border border-stone-200 rounded-xl animate-pulse bg-stone-50" />)}</div>}
-      {!loading && items.length === 0 && <p className="text-stone-400 text-sm text-center py-16">No hay elementos aún.</p>}
+      {loading && <div className="space-y-3">{[1,2,3].map((i) => <div key={i} className="h-14 rounded-2xl animate-pulse border border-cyan-400/10 bg-white/5" />)}</div>}
+      {!loading && items.length === 0 && <p className="text-slate-400 text-sm text-center py-16">No hay elementos aún.</p>}
       {!loading && items.length > 0 && (
         <div className="space-y-3">
           {items.map((item) => (
-            <div key={item.id} className="border border-stone-200 rounded-xl p-4 bg-white flex items-center justify-between gap-4">
+            <div key={item.id} className="rounded-2xl p-4 border border-cyan-400/12 bg-white/5 flex items-center justify-between gap-4 backdrop-blur-xl">
               <div className="flex items-center gap-3 min-w-0">
                 {item.image_url && <img src={item.image_url} alt="" className="w-10 h-10 rounded-full object-cover flex-shrink-0" />}
-                {item.icon && <span className="text-stone-400 text-lg flex-shrink-0">{item.icon}</span>}
+                {item.icon && <span className="text-cyan-200 text-lg flex-shrink-0">{item.icon}</span>}
                 <div className="min-w-0">
-                  <p className="font-medium text-stone-900 truncate">{item.name ?? item.title ?? item.question}</p>
-                  <p className="text-xs text-stone-400 truncate">{item.role ?? item.description ?? item.answer}</p>
+                  <p className="font-medium text-white truncate">{item.name ?? item.title ?? item.question}</p>
+                  <p className="text-xs text-slate-400 truncate">{item.role ?? item.description ?? item.answer}</p>
                 </div>
               </div>
               <div className="flex gap-2 flex-shrink-0">
-                <button onClick={() => openEdit(item)} className="text-xs text-stone-500 border border-stone-200 px-3 py-1 rounded-full hover:border-stone-400 transition-colors">Editar</button>
-                <button onClick={() => handleDelete(item.id)} className="text-xs text-red-400 border border-red-100 px-3 py-1 rounded-full hover:bg-red-50 transition-colors">Borrar</button>
+                <button onClick={() => openEdit(item)} className="text-xs text-slate-300 border border-cyan-400/12 px-3 py-1 rounded-full transition-colors hover:bg-white/6">Editar</button>
+                <button onClick={() => handleDelete(item.id)} className="text-xs text-red-300 border border-red-400/15 px-3 py-1 rounded-full transition-colors hover:bg-red-500/10">Borrar</button>
               </div>
             </div>
           ))}
@@ -268,7 +262,6 @@ function ContentSection({ resource, title, fields, emptyItem }) {
   );
 }
 
-// ── Sección: Contacto ──────────────────────────────────────────────────────────
 function ContactSection() {
   const { contact, loading, update } = useContact();
   const { show, Toast } = useToast();
@@ -297,10 +290,10 @@ function ContactSection() {
 
   return (
     <div>
-      <div className="mb-6"><h1 className="text-2xl font-bold text-stone-900">Contacto</h1>
-        <p className="text-stone-400 text-sm">Información que aparece en la sección de contacto</p></div>
-      {loading ? <div className="h-64 border border-stone-200 rounded-2xl animate-pulse bg-stone-50" /> : (
-        <div className="bg-white border border-stone-200 rounded-2xl p-8">
+      <div className="mb-6"><h1 className="text-2xl font-bold text-white">Contacto</h1>
+        <p className="text-slate-400 text-sm">Información que aparece en la sección de contacto</p></div>
+      {loading ? <div className="h-64 rounded-[30px] animate-pulse border border-cyan-400/10 bg-white/5" /> : (
+        <div className="rounded-[30px] border border-cyan-400/12 bg-white/5 p-8 backdrop-blur-xl">
           <form onSubmit={handleSave} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {fields.map(([key, label, placeholder]) => (
@@ -308,7 +301,7 @@ function ContactSection() {
                   <input value={f[key] ?? ""} onChange={(e) => setForm({...f,[key]:e.target.value})} placeholder={placeholder} className={inputClass} /></div>
               ))}
             </div>
-            <button type="submit" disabled={saving} className="bg-stone-900 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-stone-700 disabled:opacity-50 transition-colors">{saving ? "Guardando…" : "Guardar cambios"}</button>
+            <button type="submit" disabled={saving} className="bg-gradient-to-r from-blue-600 to-cyan-400 text-white px-6 py-2.5 rounded-full text-sm font-medium disabled:opacity-50 transition-transform hover:scale-[1.01]">{saving ? "Guardando…" : "Guardar cambios"}</button>
           </form>
         </div>
       )}
@@ -317,7 +310,6 @@ function ContactSection() {
   );
 }
 
-// ── Login ──────────────────────────────────────────────────────────────────────
 function Login({ onLogin }) {
   const { login } = useAuth();
   const [email, setEmail] = useState("");
@@ -334,15 +326,15 @@ function Login({ onLogin }) {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 flex items-center justify-center px-4">
-      <div className="bg-white border border-stone-200 rounded-2xl p-10 w-full max-w-sm">
-        <h1 className="text-2xl font-bold text-stone-900 mb-1">Panel admin</h1>
-        <p className="text-stone-400 text-sm mb-8">studio·lab</p>
+    <div className="min-h-screen flex items-center justify-center px-4 bg-[linear-gradient(180deg,#040816_0%,#08112b_100%)]">
+      <div className="w-full max-w-sm rounded-[30px] border border-cyan-400/12 bg-white/5 p-10 backdrop-blur-xl shadow-[0_20px_60px_rgba(2,6,23,0.35)]">
+        <h1 className="text-2xl font-bold text-white mb-1">Panel admin</h1>
+        <p className="text-cyan-200/70 text-sm mb-8">Fiwo Agency</p>
         <form onSubmit={submit} className="space-y-4">
           <input type="email" required placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className={inputClass} />
-          <input type="password" required placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} className={inputClass + (error ? " border-red-300" : "")} />
-          {error && <p className="text-red-400 text-xs">{error}</p>}
-          <button type="submit" disabled={loading} className="w-full bg-stone-900 text-white rounded-full py-3 text-sm font-medium hover:bg-stone-700 transition-colors disabled:opacity-50">
+          <input type="password" required placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} className={inputClass + (error ? " border-red-300/40" : "")} />
+          {error && <p className="text-red-300 text-xs">{error}</p>}
+          <button type="submit" disabled={loading} className="w-full rounded-full bg-gradient-to-r from-blue-600 to-cyan-400 py-3 text-sm font-medium text-white transition-transform disabled:opacity-50 hover:scale-[1.01]">
             {loading ? "Ingresando…" : "Ingresar"}
           </button>
         </form>
@@ -351,7 +343,6 @@ function Login({ onLogin }) {
   );
 }
 
-// ── Panel principal ────────────────────────────────────────────────────────────
 function AdminPanel({ onLogout }) {
   const { logout } = useAuth();
   const [active, setActive] = useState("proyectos");
@@ -381,7 +372,7 @@ function AdminPanel({ onLogout }) {
   ];
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-[linear-gradient(180deg,#040816_0%,#08112b_100%)] text-slate-100">
       <AdminNav active={active} setActive={setActive} onLogout={() => { logout(); onLogout(); }} />
       <div className="max-w-5xl mx-auto px-6 py-10">
         {active === "proyectos" && <ProjectsSection />}
@@ -394,7 +385,6 @@ function AdminPanel({ onLogout }) {
   );
 }
 
-// ── Export ─────────────────────────────────────────────────────────────────────
 export default function Admin() {
   const { authed, loading } = useAuth();
   const [loggedIn, setLoggedIn] = useState(false);

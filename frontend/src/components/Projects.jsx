@@ -1,15 +1,12 @@
 import { useProjects } from "../hooks/useProjects";
 import { SectionLabel, Tag, useInView } from "../utils";
 
-
 export default function Projects() {
   const [ref, visible] = useInView();
-
-  // false = solo proyectos publicados (vista pública del sitio)
   const { projects, loading, error } = useProjects(false);
 
   return (
-    <section id="proyectos" className="py-28 bg-stone-50">
+    <section id="proyectos" className="py-28">
       <div className="max-w-6xl mx-auto px-6">
         <div
           ref={ref}
@@ -18,20 +15,22 @@ export default function Projects() {
           }`}
         >
           <SectionLabel>Portfolio</SectionLabel>
-          <h2 className="text-4xl font-bold text-stone-900 tracking-tight mb-14">
+          <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">
             Proyectos
           </h2>
+          <p className="text-slate-300 max-w-2xl mb-14 leading-relaxed">
+            Experiencias web y productos a medida con foco en claridad, performance y una estética más premium.
+          </p>
 
-          {/* Skeleton mientras carga */}
           {loading && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="bg-white border border-stone-200 rounded-2xl overflow-hidden animate-pulse">
-                  <div className="h-48 bg-stone-100" />
+                <div key={i} className="rounded-[30px] overflow-hidden animate-pulse border border-cyan-400/10 bg-white/5">
+                  <div className="h-52 bg-white/5" />
                   <div className="p-6 space-y-3">
-                    <div className="h-4 bg-stone-100 rounded w-3/4" />
-                    <div className="h-3 bg-stone-100 rounded w-1/2" />
-                    <div className="h-3 bg-stone-100 rounded w-full" />
+                    <div className="h-4 bg-white/10 rounded w-3/4" />
+                    <div className="h-3 bg-white/10 rounded w-1/2" />
+                    <div className="h-3 bg-white/10 rounded w-full" />
                   </div>
                 </div>
               ))}
@@ -39,11 +38,11 @@ export default function Projects() {
           )}
 
           {error && (
-            <p className="text-red-400 text-sm">Error al cargar proyectos: {error}</p>
+            <p className="text-red-300 text-sm">Error al cargar proyectos: {error}</p>
           )}
 
           {!loading && !error && projects.length === 0 && (
-            <p className="text-stone-400 text-sm">Todavía no hay proyectos publicados.</p>
+            <p className="text-slate-400 text-sm">Todavía no hay proyectos publicados.</p>
           )}
 
           {!loading && !error && projects.length > 0 && (
@@ -51,10 +50,9 @@ export default function Projects() {
               {projects.map((p) => (
                 <div
                   key={p.id}
-                  className="bg-white border border-stone-200 rounded-2xl overflow-hidden hover:shadow-md transition-all duration-200 group"
+                  className="group overflow-hidden rounded-[30px] border border-cyan-400/12 bg-white/5 shadow-[0_20px_60px_rgba(2,6,23,0.22)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/28"
                 >
-                  {/* Imagen */}
-                  <div className="relative h-48 overflow-hidden bg-stone-100">
+                  <div className="relative h-52 overflow-hidden bg-slate-900/40">
                     {p.image_url ? (
                       <img
                         src={p.image_url}
@@ -62,9 +60,10 @@ export default function Projects() {
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-stone-300 text-4xl">◻</div>
+                      <div className="w-full h-full flex items-center justify-center text-cyan-200/40 text-4xl">◻</div>
                     )}
-                    <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-stone-600 text-xs font-medium px-2.5 py-1 rounded-full">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#08112b] via-transparent to-transparent" />
+                    <span className="absolute top-4 left-4 rounded-full border border-cyan-300/15 bg-[#08112b]/70 px-3 py-1 text-xs font-medium text-cyan-100 backdrop-blur-md">
                       {p.industry}
                     </span>
                     {p.live_url && (
@@ -72,21 +71,20 @@ export default function Projects() {
                         href={p.live_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="absolute top-3 right-3 bg-stone-900/80 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-stone-900"
+                        className="absolute top-4 right-4 rounded-full bg-gradient-to-r from-blue-600 to-cyan-400 px-3 py-1 text-xs font-semibold text-white opacity-0 shadow-[0_12px_30px_rgba(37,99,235,0.35)] transition-all duration-200 group-hover:opacity-100"
                       >
                         Ver sitio →
                       </a>
                     )}
                   </div>
 
-                  {/* Info */}
                   <div className="p-6">
-                    <div className="flex justify-between items-start mb-1">
-                      <h3 className="font-bold text-stone-900 text-lg">{p.title}</h3>
-                      <span className="text-xs text-stone-400 font-medium">{p.year}</span>
+                    <div className="flex justify-between items-start mb-1 gap-3">
+                      <h3 className="font-bold text-white text-lg">{p.title}</h3>
+                      <span className="text-xs text-slate-400 font-medium">{p.year}</span>
                     </div>
-                    <p className="text-xs text-stone-400 mb-3">{p.client}</p>
-                    <p className="text-stone-500 text-sm leading-relaxed mb-4">{p.description}</p>
+                    <p className="text-xs text-cyan-200/70 mb-3">{p.client}</p>
+                    <p className="text-slate-300 text-sm leading-relaxed mb-4">{p.description}</p>
                     <div className="flex flex-wrap gap-2">
                       {(p.tags ?? []).map((t) => <Tag key={t} text={t} />)}
                     </div>

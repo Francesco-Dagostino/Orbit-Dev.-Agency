@@ -1,7 +1,5 @@
 import { useRef, useState, useEffect } from "react";
 
-// ── Hook ──────────────────────────────────────────────────────────────────────
-
 export function useInView(threshold = 0.15) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -23,11 +21,9 @@ export function useInView(threshold = 0.15) {
   return [ref, visible];
 }
 
-// ── Shared UI ─────────────────────────────────────────────────────────────────
-
 export function Tag({ text }) {
   return (
-    <span className="inline-block border border-stone-300 text-stone-500 text-xs px-2 py-0.5 rounded-full">
+    <span className="inline-flex items-center rounded-full border border-cyan-400/20 bg-white/5 px-3 py-1 text-xs font-medium text-cyan-100 shadow-[0_0_20px_rgba(34,211,238,0.08)] backdrop-blur-sm">
       {text}
     </span>
   );
@@ -35,7 +31,7 @@ export function Tag({ text }) {
 
 export function SectionLabel({ children }) {
   return (
-    <p className="text-xs font-semibold tracking-[0.2em] uppercase text-stone-400 mb-4">
+    <p className="mb-5 inline-flex items-center rounded-full border border-cyan-400/20 bg-cyan-400/8 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.32em] text-cyan-300 shadow-[0_0_30px_rgba(34,211,238,0.08)] backdrop-blur-sm">
       {children}
     </p>
   );
